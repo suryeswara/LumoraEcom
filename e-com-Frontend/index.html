@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumora | Shop by describing what you need</title>
+    <meta
+      name="description"
+      content="Describe what you need in your own words and Lumora finds matching products. Track every order and cancel before it ships."
+    />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lumora" />
+    <meta property="og:title" content="Lumora | Shop by describing what you need" />
+    <meta
+      property="og:description"
+      content="Describe what you need in your own words and Lumora finds matching products."
+    />
+    <meta property="og:image" content="/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Apply the saved theme before first paint so the page never flashes the wrong colors -->
+    <script>
+      try {
+        var saved = localStorage.getItem("theme");
+        var dark = saved ? saved.indexOf("dark") === 0 : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (dark) document.documentElement.classList.add("dark");
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

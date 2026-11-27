@@ -1,0 +1,178 @@
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+
+/* Theme switching is class based: <html class="dark"> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-hover: var(--hover);
+  --color-strong: var(--strong);
+  --color-sunken: var(--sunken);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+
+  /* Base motion curve: decelerates into place. Never use the browser defaults. */
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Light theme: flat neutral surfaces */
+:root {
+  color-scheme: light;
+  --page: #ffffff;
+  --surface: #f7f7f7;
+  --raised: #efefef;
+  --hover: #e6e6e6;
+  --strong: #dcdcdc;
+  --sunken: #f4f4f4;
+  --fg: #0a0a0a;
+  --muted: #525252;
+  --subtle: #737373;
+  --line: rgb(0 0 0 / 0.12);
+  --success: #15803d;
+  --warning: #b45309;
+  --danger: #b91c1c;
+  --info: #1d4ed8;
+}
+
+/* Dark theme: backgrounds come only from the approved set
+   #000000 #181818 #1F1F1F #272727 #313131 #131209 */
+.dark {
+  color-scheme: dark;
+  --page: #000000;
+  --surface: #181818;
+  --raised: #1f1f1f;
+  --hover: #272727;
+  --strong: #313131;
+  --sunken: #131209;
+  --fg: #ffffff;
+  --muted: #a3a3a3;
+  --subtle: #8a8a8a;
+  --line: rgb(255 255 255 / 0.14);
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --info: #60a5fa;
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 6rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    @apply bg-page font-sans text-fg antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+  p, li {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 2px;
+  }
+  button, [role="button"], summary, label[for] {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+/* Named text styles. Sizes come from Tailwind's default type scale only.
+   Headings step down one or two scale steps on small screens. */
+@layer components {
+  .heading-1 { @apply text-4xl font-semibold sm:text-5xl lg:text-6xl; }
+  .heading-2 { @apply text-3xl font-semibold sm:text-4xl lg:text-5xl; }
+  .heading-3 { @apply text-2xl font-semibold sm:text-3xl lg:text-4xl; }
+  .heading-4 { @apply text-2xl font-semibold lg:text-3xl; }
+  .heading-5 { @apply text-xl font-semibold lg:text-2xl; }
+  .heading-6 { @apply text-xl font-semibold; }
+
+  .title-1 { @apply text-xl font-medium; }
+  .title-2 { @apply text-lg font-medium; }
+  .title-3 { @apply text-base font-medium; }
+  .title-4 { @apply text-sm font-medium; }
+  .title-5 { @apply text-xs font-medium; }
+
+  .body-1 { @apply text-base font-semibold; }
+  .body-2 { @apply text-base font-medium; }
+  .body-3 { @apply text-base font-normal; }
+  .body-4 { @apply text-sm font-semibold; }
+  .body-5 { @apply text-sm font-medium; }
+  .body-6 { @apply text-sm font-normal; }
+
+  .button-lg { @apply text-lg font-semibold; }
+  .button-md { @apply text-base font-semibold; }
+  .button-sm { @apply text-sm font-semibold; }
+  .button-xsm { @apply text-xs font-semibold; }
+
+  .caption-1 { @apply text-sm font-medium; }
+  .caption-2 { @apply text-sm font-normal; }
+  .caption-3 { @apply text-xs font-semibold; }
+  .caption-4 { @apply text-xs font-medium; }
+  .caption-5 { @apply text-xs font-normal; }
+}
+
+/* The only gradient on the site: hero heading text, left to right. */
+.hero-heading {
+  background-image: linear-gradient(to right, #000000, #666666);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .hero-heading {
+  background-image: linear-gradient(to right, #ffffff, #9b9b9b);
+}
+
+/* Scroll reveal: rises 32px and fades in once. */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Entrance animations for dialogs and toasts (transform and opacity only). */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-rise-in { animation: rise-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-in { animation: fade-in 300ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Reduced motion: replace movement with a plain opacity change. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transform: none; }
+  .animate-rise-in { animation-name: fade-in; }
+  .animate-pulse { animation: none; }
+}
+
+/* Hide the native disclosure triangle; the FAQ draws its own caret. */
+summary { list-style: none; }
+summary::-webkit-details-marker { display: none; }

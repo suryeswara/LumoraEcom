@@ -1,0 +1,15 @@
+# secrets (the frontend's .env only holds the public API URL and stays tracked)
+/.env
+*.env.local
+
+# build output
+target/
+node_modules/
+dist/
+
+# OS / IDE
+.DS_Store
+__MACOSX/
+.idea/
+.vscode/
+*.iml
